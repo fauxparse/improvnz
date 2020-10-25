@@ -1,0 +1,15 @@
+AllCops:
+  Exclude:
+    - 'bin/**/*'
+    - 'node_modules/**/*'
+
+Layout/LineLength:
+  Max: 100
+  IgnoredPatterns:
+    - '\A\s*#'
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
