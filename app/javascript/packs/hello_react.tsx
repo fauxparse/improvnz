@@ -2,20 +2,21 @@
 // like app/views/layouts/application.html.erb. All it does is render <div>Hello React</div> at the bottom
 // of the page.
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
+import { Editor as DraftEditor, EditorState as DraftEditorState, convertToRaw } from 'draft-js';
+import 'draft-js/dist/Draft.css';
 
-const Hello = (props: { name: React.ReactNode }) => <div>Hello {props.name}!</div>;
+const Editor = () => {
+  const [editorState, setEditorState] = useState(() => DraftEditorState.createEmpty());
 
-Hello.defaultProps = {
-  name: 'David'
-};
+  useEffect(() => {
+    console.log(JSON.stringify(convertToRaw(editorState.getCurrentContent())));
+  }, [editorState]);
 
-Hello.propTypes = {
-  name: PropTypes.string
+  return <DraftEditor editorState={editorState} onChange={setEditorState} />;
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<Hello name="React" />, document.body.appendChild(document.createElement('div')));
+  ReactDOM.render(<Editor />, document.body.appendChild(document.createElement('div')));
 });

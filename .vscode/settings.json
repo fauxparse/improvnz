@@ -1,4 +1,9 @@
 {
   "editor.formatOnPaste": true,
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "[ruby]": {
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false
+  },
+  "editor.rulers": [100]
 }
