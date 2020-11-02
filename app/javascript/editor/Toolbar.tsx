@@ -4,6 +4,7 @@ import { usePopper } from 'react-popper';
 import classNames from 'clsx';
 import UilBold from '@iconscout/react-unicons/icons/uil-bold';
 import UilItalic from '@iconscout/react-unicons/icons/uil-italic';
+import UilLink from '@iconscout/react-unicons/icons/uil-link-h';
 
 interface Props {
   value: EditorState;
@@ -31,7 +32,7 @@ const Toolbar: React.FC<Props> = ({ value, onChange }: Props) => {
   const { styles, attributes, update } = usePopper(virtualElement.current, toolbar.current, {
     placement: 'top',
     modifiers: [
-      { name: 'flip' },
+      { name: 'flip', options: { padding: 8 } },
       { name: 'arrow', options: { element: arrow.current, padding: 4 } },
       { name: 'offset', options: { offset: [0, 16] } },
     ],
@@ -46,14 +47,16 @@ const Toolbar: React.FC<Props> = ({ value, onChange }: Props) => {
       const { scrollY: originalScrollY } = window;
 
       virtualElement.current.getBoundingClientRect = () => {
-        const { scrollX, scrollY } = window;
+        const { scrollX, scrollY, innerHeight } = window;
+        const top = Math.min(innerHeight, rect.top - scrollY + originalScrollY);
+        const bottom = Math.max(0, top + rect.height);
         return {
-          top: rect.top - scrollY + originalScrollY,
+          top,
           right: rect.top - scrollX,
-          bottom: rect.bottom - scrollY + originalScrollY,
+          bottom,
           left: rect.left - scrollX,
           width: rect.width,
-          height: rect.height,
+          height: bottom - top,
         };
       };
 
@@ -118,6 +121,9 @@ const Toolbar: React.FC<Props> = ({ value, onChange }: Props) => {
         onClick={() => toggleStyle('ITALIC')}
       >
         <UilItalic className="button__icon" />
+      </button>
+      <button type="button" className="button toolbar__button">
+        <UilLink className="button__icon" />
       </button>
       <span className="toolbar__arrow" ref={arrow} style={styles.arrow} />
     </div>
