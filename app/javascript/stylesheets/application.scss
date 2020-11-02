@@ -1,1 +1,12 @@
 @import "./normalize";
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  font-size: 1em;
+  font-family: "Work Sans", sans-serif;
+}

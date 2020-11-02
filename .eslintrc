@@ -21,6 +21,23 @@
         "exports": "always-multiline",
         "functions": "ignore"
       }
-    ]
-  }
+    ],
+    "react/prop-types": 0
+  },
+  "overrides": [
+    {
+      "files": "app/javascript/**/__fixtures__/*",
+      "rules": {
+        "react/display-name": 0,
+        "@typescript-eslint/explicit-module-boundary-types": 0
+      }
+    },
+    {
+      "files": "app/javascript/**/cosmos.decorator.js",
+      "rules": {
+        "react/display-name": 0,
+        "@typescript-eslint/explicit-module-boundary-types": 0
+      }
+    }
+  ]
 }
