@@ -1,0 +1,47 @@
+@function get-top-padding($padding) {
+  @if (length($padding) >= 1) {
+    @return nth($padding, 1);
+  }
+
+  @return 0;
+}
+
+@function get-right-padding($padding) {
+  @if (length($padding) == 1) {
+    @return nth($padding, 1);
+  }
+
+  @if (length($padding) >= 2) {
+    @return nth($padding, 2);
+  }
+
+  @return 0;
+}
+
+@function get-bottom-padding($padding) {
+  @if (length($padding) == 1 or length($padding) == 2) {
+    @return nth($padding, 1);
+  }
+
+  @if (length($padding) >= 3) {
+    @return nth($padding, 3);
+  }
+
+  @return 0;
+}
+
+@function get-left-padding($padding) {
+  @if (length($padding) == 1) {
+    @return nth($padding, 1);
+  }
+
+  @if (length($padding) == 2 or length($padding) == 3) {
+    @return nth($padding, 2);
+  }
+
+  @if (length($padding) == 1) {
+    @return nth($padding, 4);
+  }
+
+  @return 0;
+}

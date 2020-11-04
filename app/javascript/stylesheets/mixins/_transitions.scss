@@ -1,0 +1,43 @@
+$easings: (
+  standard: cubic-bezier(0.4, 0, 0.2, 1),
+  decelerate: cubic-bezier(0, 0, 0.2, 1),
+  accelerate: cubic-bezier(0.4, 0, 1, 1),
+);
+
+@function easing($curve) {
+  @if map-has-key($easings, $curve) {
+    @return map-get($easings, $curve);
+  }
+
+  @return $curve;
+}
+
+$durations: (
+  none: 0ms,
+  fast: 75ms,
+  standard: 150ms,
+  slow: 300ms,
+  slower: 500ms
+);
+
+@function duration($time) {
+  @if map-has-key($durations, $time) {
+    @return map-get($durations, $time);
+  }
+
+  @return $time;
+}
+
+@function transition($properties: all, $duration: standard, $easing: standard, $delay: 0ms) {
+  $duration: duration($duration);
+  $easing: easing($easing);
+  $delay: duration($delay);
+  $transitions: ();
+
+  @each $property in $properties {
+    $transition: "#{$property} #{$duration} #{$easing} #{$delay}";
+    $transitions: append($transitions, unquote($transition), "comma");
+  }
+
+  @return $transitions;
+}

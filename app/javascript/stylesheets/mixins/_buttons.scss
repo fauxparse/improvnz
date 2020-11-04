@@ -1,0 +1,103 @@
+@mixin button-color($color) {
+  $focus-color: color($color, $alpha: 0.25);
+  $focus-outline: 0 0 0 0.25rem $focus-color;
+  $primary-color: color($color);
+  $primary-hover-color: color($color, $shade: 600);
+  $primary-active-color: color($color, $shade: 700);
+  $primary-text-color: color($color, $shade: 50);
+  $secondary-color: color($color, $shade: 100);
+  $secondary-hover-color: color($color, $shade: 200);
+  $secondary-text-color: color($color, $shade: 700);
+
+  background-color: $primary-color;
+  color: $primary-text-color;
+
+  &:hover {
+    background-color: $primary-hover-color;
+  }
+
+  &:focus {
+    box-shadow: $focus-outline;
+    outline: none;
+  }
+
+  &:disabled {
+    background-color: scale-color($primary-color, $saturation: -75%);
+  }
+
+  &.button--secondary {
+    background-color: $secondary-color;
+    color: $secondary-text-color;
+
+    &:hover,
+    &[aria-pressed="true"] {
+      background-color: $secondary-hover-color;
+    }
+
+    &:disabled {
+      background-color: scale-color($secondary-color, $saturation: -75%);
+      color: scale-color($secondary-text-color, $saturation: -75%);
+    }
+  }
+
+  &.button--outline,
+  &.button--clear {
+    background: transparent;
+    color: $secondary-text-color;
+
+    &:hover,
+    &[aria-pressed="true"] {
+      background-color: $primary-hover-color;
+      color: $primary-text-color;
+    }
+
+    &:disabled {
+      background: transparent;
+      color: scale-color($secondary-text-color, $saturation: -75%);
+    }
+  }
+
+  // stylelint-disable no-descending-specificity
+  &.button--outline {
+    border-color: $primary-color;
+
+    &:hover {
+      border-color: transparent;
+    }
+
+    &:disabled {
+      border-color: scale-color($primary-color, $saturation: -75%);
+    }
+  }
+  // stylelint-enable no-descending-specificity
+
+  &.button--toolbar {
+    border-color: transparent;
+    background-color: transparent;
+    color: $primary-color;
+
+    &:hover {
+      background-color: transparent;
+      color: $primary-hover-color;
+    }
+
+    &[aria-pressed="true"] {
+      background-color: $secondary-color;
+      color: $secondary-text-color;
+    }
+  }
+}
+
+@mixin button-size($font-size: 1rem, $line-height: 1.5rem, $padding: 0.5rem 1rem) {
+  padding: get-top-padding($padding);
+  font-size: $font-size;
+  line-height: $line-height;
+
+  &.button--outline {
+    padding: get-top-padding($padding) - 0.0625rem;
+  }
+
+  .button__text {
+    padding: 0 (get-left-padding($padding) - get-top-padding($padding));
+  }
+}

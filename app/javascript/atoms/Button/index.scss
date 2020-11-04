@@ -1,20 +1,75 @@
 @import "../../stylesheets/all.scss";
 
-@mixin button($color) {
-  background: color($color);
-  color: color($color, 50);
-
-  &:focus {
-    outline: 0.25rem solid color($color, $alpha: 0.25);
-  }
-}
-
 .button {
-  @include button(pink);
+  @include button-color(blue-grey);
+  @include button-size;
 
-  display: flex;
-  padding: 0.5rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 0;
   border-radius: 0.25rem;
   font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+
+  &--small {
+    @include button-size(
+      $font-size: 0.875rem,
+      $padding: 0.25rem 0.5rem,
+    );
+  }
+
+  &--large {
+    @include button-size(
+      $font-size: 1.25rem,
+      $padding: 1rem 2rem,
+    );
+  }
+
+  &--outline {
+    border: 0.0625rem solid transparent;
+    background-clip: border-box;
+  }
+
+  &--default {
+    @include button-color(cyan);
+  }
+
+  &--special {
+    @include button-color(pink);
+  }
+
+  &--success {
+    @include button-color(lime);
+  }
+
+  &--warning {
+    @include button-color(yellow);
+  }
+
+  &--danger {
+    @include button-color(rose);
+  }
+
+  &--toolbar {
+    @include button-color(blue-grey);
+  }
+
+  &--icon-left {
+    flex-direction: row;
+  }
+
+  &--icon-right {
+    flex-direction: row-reverse;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .icon {
+    color: inherit;
+  }
 }

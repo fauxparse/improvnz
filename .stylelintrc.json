@@ -7,7 +7,15 @@
   ],
   "rules": {
     "indentation": 2,
+    "max-line-length": [
+      100,
+      {
+        "ignore": ["comments"],
+        "ignorePattern": "/^@import\\s+/"
+      }
+    ],
     "at-rule-no-unknown": null,
-    "scss/at-rule-no-unknown": true
+    "scss/at-rule-no-unknown": true,
+    "scss/dollar-variable-empty-line-before": null
   }
 }

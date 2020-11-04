@@ -1,0 +1,51 @@
+@import "../../../stylesheets/all.scss";
+
+.icon-cells {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+  gap: 1rem;
+}
+
+.icon-cell {
+  @include shadow(0);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 8rem;
+  padding: 0.5rem;
+  border: 1px solid color(blue-grey, 300);
+  border-radius: 0.5rem;
+  background: color(blue-grey, 50);
+  cursor: pointer;
+  transition: transition(box-shadow background-color);
+
+  .icon {
+    margin: 1.75rem 1rem 1rem;
+
+    &--filled {
+      margin: 1.875rem 1rem 1rem;
+    }
+  }
+
+  &:hover {
+    @include shadow(4);
+
+    .icon {
+      color: color(blue-grey, 900);
+    }
+  }
+
+  &:active {
+    border-color: color(blue);
+    background-color: color(blue, 100);
+    transition: transition(box-shadow);
+  }
+
+  &__name {
+    color: color(blue-grey, 400);
+    font-size: 0.75rem;
+    line-height: 1.5rem;
+  }
+}

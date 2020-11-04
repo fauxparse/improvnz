@@ -96,9 +96,10 @@ $ambient-map: (
   $penumbra-values: map-get($penumbra-map, $z);
   $ambient-values: map-get($ambient-map, $z);
 
-  box-shadow: (
-    #{"#{$umbra-values} #{$umbra-color}"},
-    #{"#{$penumbra-values} #{$penumbra-color}"},
-    #{$ambient-values} $ambient-color
-  );
+  box-shadow:
+    (
+      #{"#{$umbra-values} #{$umbra-color}"},
+      #{"#{$penumbra-values} #{$penumbra-color}"},
+      #{$ambient-values} $ambient-color
+    );
 }

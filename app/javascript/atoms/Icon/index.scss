@@ -1,0 +1,18 @@
+@import "../../stylesheets/all.scss";
+
+.icon {
+  color: color(blue-grey);
+
+  &--outline {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  &--filled {
+    fill: currentColor;
+    stroke: none;
+  }
+}
