@@ -6,5 +6,7 @@
     "editor.formatOnPaste": false
   },
   "editor.rulers": [100],
-  "scss.validate": false
+  "scss.validate": false,
+  "jest.pathToConfig": "./jest.config.js",
+  "jest.enableInlineErrorMessages": true
 }

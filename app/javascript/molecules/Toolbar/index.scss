@@ -1,0 +1,24 @@
+@import "../../stylesheets/all.scss";
+
+.toolbar {
+  display: flex;
+
+  &__group {
+    display: flex;
+  }
+
+  &__separator {
+    flex: 0 0 auto;
+    align-self: stretch;
+    height: auto;
+    margin: 0 0.5rem;
+    border: 0;
+    border-right: 1px solid color(blue-grey, 300);
+  }
+
+  .button {
+    + .button {
+      margin-left: 0.25rem;
+    }
+  }
+}

@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button renders correctly 1`] = `
+<DocumentFragment>
+  <button
+    class="button button--medium button--default button--secondary"
+    type="button"
+  >
+    <span
+      class="button__text"
+    >
+      Hello
+    </span>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button with additional children renders correctly 1`] = `
+<DocumentFragment>
+  <button
+    class="button button--medium button--default button--secondary"
+    type="button"
+  >
+    Hello
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button with an icon renders correctly 1`] = `
+<DocumentFragment>
+  <button
+    class="button button--medium button--default button--secondary button--icon-left"
+    type="button"
+  >
+    <svg
+      class="icon icon--outline button__icon"
+      data-icon="home"
+      height="24"
+      viewBox="0 0 24 24"
+      width="24"
+    >
+      <path
+        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;

@@ -19,7 +19,7 @@
   border-radius: 0.5rem;
   background: color(blue-grey, 50);
   cursor: pointer;
-  transition: transition(box-shadow background-color);
+  transition: transition(box-shadow background-color transform);
 
   .icon {
     margin: 1.75rem 1rem 1rem;
@@ -31,6 +31,8 @@
 
   &:hover {
     @include shadow(4);
+
+    transform: translateY(-0.0625rem);
 
     .icon {
       color: color(blue-grey, 900);
