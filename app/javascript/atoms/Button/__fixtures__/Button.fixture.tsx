@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelect } from 'react-cosmos/fixture';
 import Button, { ButtonSize, ButtonFlavour, ButtonProps, ButtonStyle } from '..';
-import Icon from '../../Icon';
+import Icon, { ICONS } from '../../Icon';
 
 const ButtonDemo: React.FC<ButtonProps> = ({ children, ...props }: ButtonProps) => {
   const [size] = useSelect('size', {
@@ -19,11 +19,6 @@ const ButtonDemo: React.FC<ButtonProps> = ({ children, ...props }: ButtonProps) 
     defaultValue: 'no',
   });
 
-  const [iconPosition] = useSelect('iconPosition', {
-    options: ['left', 'right'],
-    defaultValue: 'left',
-  });
-
   return (
     <div
       style={{
@@ -36,7 +31,6 @@ const ButtonDemo: React.FC<ButtonProps> = ({ children, ...props }: ButtonProps) 
         <Button
           key={flavour}
           disabled={disabled === 'yes'}
-          iconPosition={iconPosition}
           {...props}
           {...{
             [ButtonStyle[style]]: true,
@@ -51,13 +45,24 @@ const ButtonDemo: React.FC<ButtonProps> = ({ children, ...props }: ButtonProps) 
   );
 };
 
+const IconButtonDemo = ({ icon: initialIcon, ...props }) => {
+  const [icon] = useSelect('icon', { options: Object.keys(ICONS), defaultValue: initialIcon });
+
+  const [iconPosition] = useSelect('iconPosition', {
+    options: ['left', 'right'],
+    defaultValue: 'left',
+  });
+
+  return <ButtonDemo icon={icon} iconPosition={iconPosition} {...props} />;
+};
+
 export default {
   'Text only': <ButtonDemo text="Button" aria-pressed={false} disabled={false} />,
-  'With icon': <ButtonDemo icon="home" text="Home" aria-pressed={false} disabled={false} />,
-  'Icon only': <ButtonDemo icon="home" aria-pressed={false} disabled={false} />,
+  'With icon': <IconButtonDemo icon="home" text="Home" aria-pressed={false} disabled={false} />,
+  'Icon only': <IconButtonDemo icon="home" aria-pressed={false} disabled={false} />,
   'Two icons': (
-    <ButtonDemo icon="home" text="Home" aria-pressed={false} disabled={false}>
+    <IconButtonDemo icon="home" text="Home" aria-pressed={false} disabled={false}>
       <Icon icon="chevron-down" />
-    </ButtonDemo>
+    </IconButtonDemo>
   ),
 };

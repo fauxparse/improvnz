@@ -1,7 +1,9 @@
 @import "../../stylesheets/all.scss";
 
 .icon {
-  color: color(blue-grey);
+  @include use-theme {
+    color: themed(icon);
+  }
 
   &--outline {
     fill: none;

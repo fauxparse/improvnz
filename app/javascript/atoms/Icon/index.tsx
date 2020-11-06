@@ -3,7 +3,7 @@ import classNames from 'clsx';
 import './index.scss';
 
 const DEFAULT_ICON_SIZE = 24;
-const SMALL_ICON_SIZE = 24;
+const SMALL_ICON_SIZE = 20;
 
 type IconDefinition = {
   style: 'outline' | 'filled';
@@ -23,6 +23,11 @@ export const ICONS: { [key: string]: IconDefinition } = {
   code: {
     style: 'outline',
     path: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
+  },
+  drag: {
+    style: 'outline',
+    path:
+      'M8.5 4a1 1 0 0 1 0 2 1 1 0 0 1 0 -2M15.5 4a1 1 0 0 1 0 2 1 1 0 0 1 0 -2M8.5 11a1 1 0 0 1 0 2 1 1 0 0 1 0 -2M15.5 11a1 1 0 0 1 0 2 1 1 0 0 1 0 -2M8.5 18a1 1 0 0 1 0 2 1 1 0 0 1 0 -2M15.5 18a1 1 0 0 1 0 2 1 1 0 0 1 0 -2',
   },
   home: {
     style: 'outline',
@@ -54,6 +59,11 @@ export const ICONS: { [key: string]: IconDefinition } = {
     style: 'outline',
     path:
       'M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1',
+  },
+  list: {
+    style: 'outline',
+    path:
+      'M9 6h12M9 12h12M9 18h12M3 5a1 1 0 0 1 0 2 1 1 0 0 1 0-2M3 11a1 1 0 0 1 0 2 1 1 0 0 1 0-2M3 17a1 1 0 0 1 0 2 1 1 0 0 1 0-2',
   },
   more: {
     style: 'outline',

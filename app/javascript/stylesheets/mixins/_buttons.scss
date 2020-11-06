@@ -76,26 +76,43 @@
   // stylelint-enable no-descending-specificity
 
   &.button--toolbar {
+    @include use-theme {
+      color: themed(toolbar, color);
+
+      &:hover,
+      &:active {
+        color: themed(toolbar, hover);
+      }
+
+      &:active,
+      &[aria-pressed="true"] {
+        background-color: themed(toolbar, pressed);
+        color: themed(toolbar, hover);
+      }
+    }
+
     border-color: transparent;
     background-color: transparent;
-    color: $primary-color;
 
     &:hover,
     &:active {
       background-color: transparent;
-      color: color($color, 800);
     }
 
-    &:active,
-    &[aria-pressed="true"] {
-      background-color: $secondary-color;
-      color: $secondary-text-color;
+    &:disabled {
+      &,
+      &:hover,
+      &:active {
+        background-color: transparent;
+        color: scale-color($secondary-text-color, $saturation: -75%);
+      }
     }
   }
 }
 
-@mixin button-size($font-size: 1rem, $line-height: 1.5rem, $padding: 0.5rem 1rem) {
+@mixin button-size($font-size: 1rem, $line-height: 1.5rem, $padding: 0.5rem 1rem, $border-radius: 0.25rem) {
   padding: get-top-padding($padding);
+  border-radius: $border-radius;
   font-size: $font-size;
   line-height: $line-height;
 

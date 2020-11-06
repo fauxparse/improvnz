@@ -1,0 +1,29 @@
+@function fetch($map, $key, $default-value: null) {
+  @return if(map-has-key($map, $key), map-get($map, $key), $default-value);
+}
+
+@function deep-merge($parent-map, $child-map) {
+  $result: $parent-map;
+
+  @each $key, $value in $child-map {
+    @if (not map-has-key($result, $key)) or (type-of(map-get($result, $key)) != type-of($value)) or (not (type-of(map-get($result, $key)) == map and type-of($value) == map)) {
+      $result: map-merge($result, ($key: $value));
+    }
+
+    @else {
+      $result: map-merge($result, ($key: deep-merge(map-get($result, $key), $value)));
+    }
+  }
+
+  @return $result;
+}
+
+@function deep-get($map, $path...) {
+  $result: $map;
+
+  @each $key in $path {
+    $result: map-get($result, $key);
+  }
+
+  @return $result;
+}

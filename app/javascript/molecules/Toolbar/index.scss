@@ -2,18 +2,23 @@
 
 .toolbar {
   display: flex;
+  align-items: center;
 
   &__group {
     display: flex;
+    align-items: center;
   }
 
   &__separator {
+    @include use-theme {
+      border-right: 1px solid themed(border);
+    }
+
     flex: 0 0 auto;
     align-self: stretch;
     height: auto;
-    margin: 0 0.5rem;
+    margin: 0.25rem 0.5rem;
     border: 0;
-    border-right: 1px solid color(blue-grey, 300);
   }
 
   .button {

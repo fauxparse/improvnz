@@ -1,0 +1,27 @@
+.public {
+  &-DraftEditor {
+    &-content {
+      padding: 1rem 8rem 1rem 16rem;
+      font-size: 1rem;
+      line-height: 2rem;
+
+      [data-block] {
+        margin: 1rem 0;
+      }
+    }
+  }
+}
+
+.editor {
+  &__toolbar {
+    z-index: 100;
+    padding: 0.4375rem;
+    pointer-events: all;
+
+    &--hidden {
+      opacity: 0;
+      pointer-events: none;
+      touch-action: none;
+    }
+  }
+}

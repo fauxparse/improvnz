@@ -1,0 +1,22 @@
+@import "../../stylesheets/all.scss";
+
+@mixin floater($background, $border) {
+  @include drop-shadow(4);
+
+  position: relative;
+  border: 0.0625rem solid $border;
+  border-radius: 0.5rem;
+  background: $background;
+
+  > .floater__arrow {
+    @include arrow($fill: $background, $stroke: $border);
+
+    position: absolute;
+  }
+}
+
+.floater {
+  @include use-theme {
+    @include floater($background: themed(background), $border: transparent);
+  }
+}

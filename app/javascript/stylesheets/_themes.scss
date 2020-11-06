@@ -1,0 +1,68 @@
+$neutral: blue-grey;
+
+$themes: (
+  light: (
+    background: color($neutral, 50),
+    foreground: color($neutral, 800),
+    secondary: color($neutral, 600),
+    border: color($neutral, 300),
+    icon: color($neutral, 600),
+    panel: color($neutral, 100),
+    toolbar: (
+      color: color($neutral),
+      hover: color($neutral, 800),
+      pressed: color($neutral, 200),
+    ),
+  ),
+  dark: (
+    background: color($neutral, 700),
+    foreground: color($neutral, 50),
+    secondary: color($neutral, 400),
+    border: color($neutral, 500),
+    icon: color($neutral, 500),
+    panel: color($neutral, 600),
+    toolbar: (
+      color: color($neutral, 400),
+      hover: color($neutral, 50),
+      pressed: color($neutral, 600),
+    ),
+  )
+);
+
+$default-theme: light !default;
+$current-theme: $default-theme;
+
+@function themed($path...) {
+  $value: deep-get($themes, $current-theme, $path...);
+
+  @if ($value == null) {
+    $value: deep-get($themes, $default-theme, $path...);
+  }
+
+  @return $value;
+}
+
+@mixin define-theme($scope, $map) {
+  @each $key, $value in $map {
+    $existing: map-get($themes, $key);
+    $themes: deep-merge($themes, ($key: ($scope: $value))) !global;
+  }
+}
+
+@mixin with-theme($theme) {
+  $old-theme: $current-theme;
+  $current-theme: $theme !global;
+  @content;
+  $current-theme: $old-theme !global; // stylelint-disable-line order/order
+}
+
+@mixin use-theme() {
+  @each $theme-name, $theme in $themes {
+    &[data-theme="#{$theme-name}"],
+    [data-theme="#{$theme-name}"] & {
+      @include with-theme($theme-name) {
+        @content;
+      }
+    }
+  }
+}

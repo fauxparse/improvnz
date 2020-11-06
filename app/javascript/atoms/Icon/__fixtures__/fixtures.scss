@@ -9,15 +9,37 @@
 .icon-cell {
   @include shadow(0);
 
+  @include use-theme {
+    border-color: themed(border);
+    background: themed(background);
+
+    .icon-cell__name {
+      color: themed(secondary);
+    }
+
+    &:hover {
+      .icon {
+        color: themed(foreground);
+      }
+
+      .icon-cell__name {
+        color: themed(foreground);
+      }
+    }
+
+    &:active {
+      background-color: themed(panel);
+    }
+  }
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 8rem;
   padding: 0.5rem;
-  border: 1px solid color(blue-grey, 300);
+  border: 1px solid transparent;
   border-radius: 0.5rem;
-  background: color(blue-grey, 50);
   cursor: pointer;
   transition: transition(box-shadow background-color transform);
 
@@ -33,20 +55,13 @@
     @include shadow(4);
 
     transform: translateY(-0.0625rem);
-
-    .icon {
-      color: color(blue-grey, 900);
-    }
   }
 
   &:active {
-    border-color: color(blue);
-    background-color: color(blue, 100);
     transition: transition(box-shadow);
   }
 
   &__name {
-    color: color(blue-grey, 400);
     font-size: 0.75rem;
     line-height: 1.5rem;
   }
