@@ -1,20 +1,25 @@
+@import "../../stylesheets/all.scss";
+
 .public {
   &-DraftEditor {
     &-content {
-      padding: 1rem 8rem 1rem 16rem;
+      position: relative;
+      padding: 1rem 2rem;
       font-size: 1rem;
       line-height: 2rem;
 
       [data-block] {
-        margin: 1rem 0;
+        padding: 0.5rem 0 1rem 4rem;
       }
     }
   }
 }
 
 .editor {
+  position: relative;
+
   &__toolbar {
-    z-index: 100;
+    z-index: 1;
     padding: 0.4375rem;
     pointer-events: all;
 
@@ -23,5 +28,66 @@
       pointer-events: none;
       touch-action: none;
     }
+  }
+
+  &__gutter {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &__block-handle {
+    position: absolute;
+    top: 0;
+    left: 3rem;
+    z-index: 1;
+    margin-top: 0.5rem;
+    transition: transition(opacity);
+
+    &--enter {
+      opacity: 0;
+
+      &-active,
+      &-done {
+        opacity: 1;
+      }
+    }
+
+    &--exit {
+      opacity: 1;
+
+      &-active,
+      &-done {
+        opacity: 0;
+      }
+    }
+
+    .button {
+      &.button--toolbar {
+        &:hover,
+        &:focus,
+        &:active {
+          background: transparent;
+          box-shadow: none;
+        }
+      }
+    }
+
+    .block-handle__drag {
+      cursor: grab;
+
+      &:active {
+        cursor: grabbing;
+      }
+    }
+  }
+
+  &__insertion-point {
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: 0.25rem;
+    margin: -0.125rem 0;
+    background: color(cyan, 500, 0.5);
   }
 }

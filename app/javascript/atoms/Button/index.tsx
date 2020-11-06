@@ -36,6 +36,7 @@ interface ButtonVariants
     OptionalProps<ButtonFlavour>,
     OptionalProps<ButtonStyle> {}
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, ButtonVariants {
+  className?: string;
   text?: string;
   icon?: NamedIcon;
   iconPosition?: ButtonIconPosition;
@@ -52,6 +53,7 @@ const otherPropNames: [keyof ButtonVariants][] = flatMap(
 const otherProps = <T extends ButtonVariants>(props: T) => omit(props, otherPropNames);
 
 const Button: React.FC<ButtonProps> = ({
+  className,
   type = 'button',
   icon,
   iconPosition = 'left',
@@ -65,7 +67,8 @@ const Button: React.FC<ButtonProps> = ({
       `button--${extract(ButtonSize, props, ButtonSize.medium)}`,
       `button--${extract(ButtonFlavour, props, ButtonFlavour.default)}`,
       `button--${extract(ButtonStyle, props, ButtonStyle.secondary)}`,
-      icon && `button--icon-${iconPosition}`
+      icon && `button--icon-${iconPosition}`,
+      className
     )}
     type={type}
     {...otherProps(props)}

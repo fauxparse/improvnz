@@ -1,12 +1,12 @@
-import React, { forwardRef, RefObject, useCallback } from 'react';
-import {
-  Editor as DraftEditor,
-  DraftHandleValue,
-  EditorState,
-  RichUtils,
-  getDefaultKeyBinding,
-} from 'draft-js';
+import React, { forwardRef, RefObject } from 'react';
+import { Editor as DraftEditor, EditorState } from 'draft-js';
+import classNames from 'clsx';
 import EditorToolbar from './EditorToolbar';
+import Gutter from './Gutter';
+import InsertionPoint from './InsertionPoint';
+import useDragDrop from './useDragDrop';
+import useKeyBindings from './useKeyBindings';
+import STYLE_MAP from './styleMap';
 
 import 'draft-js/dist/Draft.css';
 import './index.scss';
@@ -16,63 +16,30 @@ interface EditorProps {
   onChange(value: EditorState): void;
 }
 
-const styleMap = {
-  BOLD: {
-    fontWeight: 600,
-  },
-  CODE: {
-    fontFamily: 'Operator Mono, monospace',
-  },
-};
-
 const Editor = forwardRef(({ state, onChange }: EditorProps, ref: RefObject<DraftEditor>) => {
-  const changed = useCallback(
-    (newState) => {
-      onChange(newState);
-    },
-    [onChange]
-  );
+  const { dropPosition, dragOver, drop, dragEnd } = useDragDrop(state, onChange);
 
-  const keyBindingFunction = useCallback(
-    (e) => {
-      if (e.key === 'Tab') {
-        const newState = RichUtils.onTab(e, state, 6);
-        if (newState !== state) {
-          e.preventDefault();
-          changed(newState);
-        }
-        return;
-      }
-      return getDefaultKeyBinding(e);
-    },
-    [state, changed]
-  );
-
-  const handleKeyCommand = useCallback(
-    (command: string): DraftHandleValue => {
-      const newState = RichUtils.handleKeyCommand(state, command);
-      if (newState) {
-        onChange(newState);
-        return 'handled';
-      }
-      console.log(command);
-      return 'not-handled';
-    },
-    [state, onChange]
-  );
+  const { keyBindingFn, handleKeyCommand } = useKeyBindings(state, onChange);
 
   return (
-    <>
+    <div
+      className={classNames('editor', dropPosition && 'editor--dragging')}
+      onDragOver={dragOver}
+      onDrop={drop}
+      onDragEnd={dragEnd}
+    >
       <DraftEditor
         ref={ref}
         editorState={state}
-        customStyleMap={styleMap}
-        keyBindingFn={keyBindingFunction}
+        customStyleMap={STYLE_MAP}
+        keyBindingFn={keyBindingFn}
         handleKeyCommand={handleKeyCommand}
-        onChange={changed}
+        onChange={onChange}
       />
-      <EditorToolbar state={state} onChange={changed} />
-    </>
+      <Gutter state={state} onChange={onChange} />
+      {dropPosition && <InsertionPoint {...dropPosition} />}
+      <EditorToolbar state={state} onChange={onChange} />
+    </div>
   );
 });
 
