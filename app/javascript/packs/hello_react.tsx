@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Draft, { EditorState as DraftEditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import Editor from '../editor/index';
+import Editor from '../organisms/Editor';
 
 const fetchJSON = (url: RequestInfo, options: RequestInit = {}) => {
   const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -65,7 +65,7 @@ const NodeEditor = ({ id }: NodeEditorProps) => {
       <button type="button" onClick={save}>
         Save
       </button>
-      <Editor ref={ref} value={editorState} onChange={setEditorState} />
+      <Editor ref={ref} state={editorState} onChange={setEditorState} />
     </>
   );
 };

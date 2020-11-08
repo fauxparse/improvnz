@@ -75,6 +75,10 @@ export const ICONS: { [key: string]: IconDefinition } = {
     path:
       'M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z',
   },
+  plus: {
+    style: 'outline',
+    path: 'M12 6v6m0 0v6m0-6h6m-6 0H6',
+  },
   underline: {
     style: 'outline',
     path: 'M18 3v7a6 6 0 0 1-12 0v-7M4 21h16',

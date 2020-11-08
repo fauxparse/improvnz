@@ -6,6 +6,7 @@ import Gutter from './Gutter';
 import InsertionPoint from './InsertionPoint';
 import useDragDrop from './useDragDrop';
 import useKeyBindings from './useKeyBindings';
+import blockRendererFn from './blockRenderer';
 import STYLE_MAP from './styleMap';
 
 import 'draft-js/dist/Draft.css';
@@ -32,6 +33,7 @@ const Editor = forwardRef(({ state, onChange }: EditorProps, ref: RefObject<Draf
         ref={ref}
         editorState={state}
         customStyleMap={STYLE_MAP}
+        blockRendererFn={blockRendererFn}
         keyBindingFn={keyBindingFn}
         handleKeyCommand={handleKeyCommand}
         onChange={onChange}

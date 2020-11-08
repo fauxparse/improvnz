@@ -39,9 +39,10 @@
   &__block-handle {
     position: absolute;
     top: 0;
-    left: 3rem;
+    left: 2.5rem;
     z-index: 1;
-    margin-top: 0.5rem;
+    display: flex;
+    margin-top: 1rem;
     transition: transition(opacity);
 
     &--enter {
@@ -64,6 +65,8 @@
 
     .button {
       &.button--toolbar {
+        padding: 0;
+
         &:hover,
         &:focus,
         &:active {
