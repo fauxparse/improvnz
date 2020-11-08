@@ -1,39 +1,28 @@
-import React, { useCallback, useEffect, useRef } from 'react';
-import { AtomicBlockUtils, EditorState, SelectionState } from 'draft-js';
+import React, { useCallback, useContext, useRef } from 'react';
+import { AtomicBlockUtils, ContentBlock, EditorState, SelectionState } from 'draft-js';
 import Button from '../../atoms/Button';
+import Context from './context';
 
 interface Props {
-  state: EditorState;
-  blockKey: string;
-  onChange(value: EditorState): void;
+  block: ContentBlock;
+  onDragStart?(): void;
 }
 
-const BlockHandle: React.FC<Props> = ({ blockKey, state, onChange }) => {
+const BlockHandle: React.FC<Props> = ({ block, onDragStart }) => {
   const ref = useRef<HTMLDivElement>();
 
-  const updatePosition = useCallback(() => {
-    if (ref.current) {
-      const block: HTMLElement = ref.current
-        .closest('.editor')
-        .querySelector(`[data-block][data-offset-key^="${blockKey}"]`);
-      ref.current.style.transform = `translateY(${block.offsetTop - 4}px)`;
-    }
-  }, [blockKey]);
+  const key = block.getKey();
 
-  useEffect(updatePosition, [updatePosition, state]);
-
-  useEffect(() => {
-    window.addEventListener('resize', updatePosition);
-    return () => window.removeEventListener('resize', updatePosition);
-  }, [updatePosition]);
+  const { state, onChange } = useContext(Context);
 
   const dragStart = useCallback(
     (e) => {
       e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('application/editor-block', blockKey);
+      e.dataTransfer.setData('application/editor-block', key);
       e.dataTransfer.setDragImage(new Image(), 0, 0);
+      if (onDragStart) onDragStart();
     },
-    [blockKey]
+    [key, onDragStart]
   );
 
   const insertImage = useCallback(
@@ -43,11 +32,10 @@ const BlockHandle: React.FC<Props> = ({ blockKey, state, onChange }) => {
       const content = state.getCurrentContent();
       const contentStateWithEntity = content.createEntity('image', 'IMMUTABLE', { src });
       const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-      const block = content.getBlockForKey(blockKey);
-      const nextBlock = content.getBlockAfter(blockKey);
-      const selection = SelectionState.createEmpty(blockKey).merge({
+      const nextBlock = content.getBlockAfter(key);
+      const selection = SelectionState.createEmpty(key).merge({
         anchorOffset: block.getLength(),
-        focusKey: nextBlock ? nextBlock.getKey() : blockKey,
+        focusKey: nextBlock ? nextBlock.getKey() : key,
         focusOffset: nextBlock ? 0 : block.getLength(),
       });
       const newState = EditorState.set(state, {
@@ -56,7 +44,7 @@ const BlockHandle: React.FC<Props> = ({ blockKey, state, onChange }) => {
       });
       onChange(AtomicBlockUtils.insertAtomicBlock(newState, entityKey, ' '));
     },
-    [state, onChange, blockKey]
+    [state, onChange, block, key]
   );
 
   return (
