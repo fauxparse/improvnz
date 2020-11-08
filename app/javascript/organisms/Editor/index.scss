@@ -87,4 +87,15 @@
     margin: -0.125rem 0;
     background: color(cyan, 500, 0.5);
   }
+
+  .media {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 1rem;
+
+    &__image {
+      width: 100%;
+      height: auto;
+    }
+  }
 }

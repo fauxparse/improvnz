@@ -12,7 +12,13 @@ const MediaBlock: React.FC<MediaBlockProps> = ({ block, contentState }) => {
 
   switch (entity.getType()) {
     case 'image':
-      return <img src={data.src} />;
+      return (
+        <div className="media">
+          {data.urls.map((url) => (
+            <img key={url} className="media__image" src={url} />
+          ))}
+        </div>
+      );
     default:
       return null;
   }

@@ -1,5 +1,12 @@
 import { useCallback, KeyboardEvent } from 'react';
-import { EditorState, DraftHandleValue, RichUtils, getDefaultKeyBinding } from 'draft-js';
+import {
+  EditorState,
+  DraftHandleValue,
+  RichUtils,
+  getDefaultKeyBinding,
+  Modifier,
+  SelectionState,
+} from 'draft-js';
 
 type UseKeyBindingsHook = (
   state: EditorState,
@@ -20,6 +27,7 @@ const useKeyBindings: UseKeyBindingsHook = (state, onChange) => {
         }
         return;
       }
+
       return getDefaultKeyBinding(e);
     },
     [state, onChange]
@@ -27,11 +35,40 @@ const useKeyBindings: UseKeyBindingsHook = (state, onChange) => {
 
   const handleKeyCommand = useCallback(
     (command: string): DraftHandleValue => {
+      if (command === 'backspace') {
+        const selection = state.getSelection();
+        const content = state.getCurrentContent();
+        const block = content.getBlockForKey(selection.getFocusKey());
+
+        // Delete an empty block after an atomic block
+        if (selection.isCollapsed() && block.getLength() === 0) {
+          const previousBlock = content.getBlockBefore(block.getKey());
+          const nextBlock = content.getBlockAfter(block.getKey());
+          if (previousBlock.getType() === 'atomic' && nextBlock) {
+            onChange(
+              EditorState.set(state, {
+                currentContent: Modifier.removeRange(
+                  content,
+                  SelectionState.createEmpty(block.getKey()).merge({
+                    focusKey: nextBlock.getKey(),
+                    focusOffset: 0,
+                  }),
+                  'forward'
+                ),
+              })
+            );
+          }
+          return 'handled';
+        }
+      }
+
       const newState = RichUtils.handleKeyCommand(state, command);
+
       if (newState) {
         onChange(newState);
         return 'handled';
       }
+
       console.log(command);
       return 'not-handled';
     },
